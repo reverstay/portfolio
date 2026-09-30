@@ -1,0 +1,35 @@
+# Produção: app Next.js + Caddy (HTTPS automático via Let's Encrypt) para ramonmpm.com
+services:
+  app:
+    build:
+      context: .
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME:-reverstay}
+    image: portfolio
+    restart: unless-stopped
+    environment:
+      SITE_URL: ${SITE_URL:-https://ramonmpm.com}
+      GITHUB_USERNAME: ${GITHUB_USERNAME:-reverstay}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      CONTACT_TO_EMAIL: ${CONTACT_TO_EMAIL:-}
+      CONTACT_FROM_EMAIL: ${CONTACT_FROM_EMAIL:-}
+    expose:
+      - "3000"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

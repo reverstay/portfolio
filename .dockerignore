@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+Dockerfile
+.dockerignore
+docker-compose.yml
+Caddyfile
+*.md
+.env
+.env*.local
+media-originais

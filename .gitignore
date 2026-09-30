@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env*.local
+
+# Vídeos originais em alta resolução (as versões comprimidas ficam em public/projects)
+media-originais/
