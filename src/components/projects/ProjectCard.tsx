@@ -126,7 +126,11 @@ export function ProjectCard({ project, fromHome = false }: { project: Project; f
           <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${t.overlay}`} />
 
           <div className="relative z-10 w-full overflow-hidden flex-1">
-            <div className="mb-3 flex flex-wrap justify-end gap-1.5 sm:mb-4">
+            <div className={`mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 ${project.logo ? "justify-between" : "justify-end"}`}>
+              {project.logo && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={project.logo} alt="" aria-hidden className="h-7 w-auto object-contain" />
+              )}
               <span className={`${t.pill.className} px-2.5 py-0.5 text-[10px] font-semibold tracking-wide whitespace-nowrap backdrop-blur-sm`}>
                 {t.pill.dot && <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />}
                 {project.badge ?? dict.projects.pills[project.variant]}

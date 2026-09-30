@@ -48,6 +48,8 @@ type RawProject = {
   stack: Text[];
   highlights: List;
   cardHighlights?: List;
+  // Logo do cliente/produto (PNG com fundo transparente), exibido no card e no topo da página
+  logo?: string;
   images: string[];
   videoUrl?: string;
   // "phone" mostra o vídeo numa moldura de celular; "wide" em tela cheia. Padrão: wide se isWeb.
@@ -298,6 +300,7 @@ const raw: RawProject[] = [
       en: ["Cost per module reduced by 31.5%.", "Operation expanded from 10 to 72 units."],
     },
     images: [],
+    logo: "/projects/clinica-remota-logo.png",
     videoUrl: "/projects/clinica-remota.mp4",
     videoLayout: "phone",
     demoUrl: "https://clinicaremota.com",

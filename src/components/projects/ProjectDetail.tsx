@@ -124,6 +124,12 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
         </Link>
       </motion.div>
 
+      {project.logo && (
+        <motion.div variants={item} className="mb-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={project.logo} alt={`Logo ${project.cardTitle ?? project.title}`} className="h-14 sm:h-16 w-auto object-contain" />
+        </motion.div>
+      )}
       <motion.p variants={item} className="mb-3 font-mono text-xs sm:text-sm text-accent">
         // {project.category.toLowerCase()}
       </motion.p>
