@@ -69,6 +69,7 @@ type RawProject = {
   media?: RawMedia[];
   // Imagem do produto exibida no card
   cover?: string;
+  coverFit?: "contain" | "cover";
   // O link de demoUrl leva a um login, não a uma demonstração aberta
   demoIsLogin?: boolean;
   videoUrl?: string;
@@ -147,7 +148,8 @@ const raw: RawProject[] = [
       en: ["Paradox databases synced to the cloud.", "Batch imports with logging and verification."],
     },
     images: [],
-    cover: "/projects/blanche/cover.webp",
+    cover: "/projects/blanche/blanche-logo.png",
+    coverFit: "contain",
     media: [
       {
         src: "/projects/topologias/blanche-arquitetura.png",

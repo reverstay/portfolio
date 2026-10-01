@@ -134,7 +134,7 @@ export function ProjectCard({ project, fromHome = false }: { project: Project; f
                   alt=""
                   aria-hidden
                   loading="lazy"
-                  className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                  className={`h-full w-full ${project.coverFit === "contain" ? "object-contain" : "object-cover object-top"} transition-transform duration-500 group-hover:scale-[1.03]`}
                 />
               </div>
             )}

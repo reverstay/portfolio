@@ -28,6 +28,7 @@ Ajudar o visitante a entender o que Ramon entrega, identificar evidências em pr
 | M01 | Codex | em andamento | Novas ilustrações em `public/projects/topologias/` e registro de fontes/prompts em `docs/MIDIAS-PROJETOS.md` | Mapas de arquitetura cartonizados, fiéis aos repositórios; não substituir prints por imagens geradas. |
 | S01 | Codex | concluído | `.agents/skills/portfolio-*/SKILL.md`, `.claude/skills/portfolio-*/SKILL.md`, índices em `AGENTS.md` e `CLAUDE.md` | Quatro skills compartilhadas; oito entradas aprovadas por `quick_validate.py`. |
 | M02 | Codex | concluído; arquivos liberados | `public/projects/comando-remoto/`, `src/data/projects.ts`, `docs/MIDIAS-PROJETOS.md` | Duas capturas reais com dados fictícios e hardware offline, topologia preexistente e capa integradas pelo modelo media do Claude após passagem explícita. Tipos/build, PT/EN, desktop/mobile e zoom aprovados. Não foram necessários componentes ou rota paralelos. |
+| CL02 | Claude | em andamento | Novos: `public/projects/clinica-remota/` (capturas e topologia). Leitura: `C:\Repositorios\ERP-clinica-remota` e app em `http://localhost:8000` (iniciada por Ramon). `projects.ts` só após passagem do L01. | Topologia cartonizada do ERP Clínica Remota, capturas reais com temas claro/escuro (ou os existentes), legendas PT/EN; registrar em mensagem. |
 
 ## Contexto confirmado e limites
 
@@ -134,3 +135,11 @@ Pendências/sugestões, sem ação minha: (a) `topologias/blanche-arquitetura.pn
 - Capturas da aplicação real em 1440 × 1000 e 390 × 844 (página completa), com fixture nativa seed_demo. Login inicialmente falhou na automação por preenchimento; corrigida seleção/limpeza dos campos e repetido com sucesso. Pré-visualização sem hardware não foi publicada; endpoints WebSocket/WHEP indisponíveis nesse ambiente são uma limitação registrada.
 - Encerrados os três servidores iniciados nesta retomada (Django demo, Vite demo e Next produção); nenhum servidor de outro agente foi interrompido. `next start` respondeu, mas avisou que a configuração standalone recomenda `node .next/standalone/server.js` para operação.
 - Preservadas as mudanças do Claude. `projects.ts` liberado; sem commit, push ou deploy. M01 tem ilustrações integradas, mas prompt original não recuperado. Inventários I01/I02 não estavam entregues em disco e não foram marcados concluídos. Melhorias EXP04/06/07/08 restantes continuam na fila, fora desta entrega visual.
+
+| L01 | Codex | concluído; arquivos liberados | src/data/projects.ts, src/components/projects/ProjectCard.tsx | Logo como capa frontal do card, sem cortes; tipos e PT/EN a 1440/390 px aprovados. |
+
+L01: interpretação após inspecionar a arte quadrada — capa frontal do card, antes do título. Inclui ProjectCard.tsx, liberado pelo Claude; preservar imagem inteira com ajuste opcional de encaixe.
+
+L01: verificados carregamento do logo e ausência de overflow em /pt/projetos e /en/projetos, desktop e celular. TypeScript aprovado; servidor de teste encerrado. Removido apenas o bloco que next dev acrescentou automaticamente a AGENTS.md durante a validação.
+
+| T01 | Codex | concluído; arquivo liberado | src/app/globals.css | color-scheme: dark fixo. Validado em PT/EN, 1440/390 px, com preferência de sistema light/dark: fundo preto e esquema dark nos oito cenários, sem overflow. Escopo assumido: tema do portfólio; capturas não alteradas. |
