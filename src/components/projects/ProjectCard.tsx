@@ -97,6 +97,9 @@ const themes: Record<ProjectVariant, Theme> = {
 export function ProjectCard({ project, fromHome = false }: { project: Project; fromHome?: boolean }) {
   const { t: dict, href: localize } = useI18n();
   const t = themes[project.variant];
+  const architecture = project.media?.find((media) => media.kind === "architecture");
+  const cover = architecture?.src ?? project.cover;
+  const containCover = !!architecture || project.coverFit === "contain";
   const visibleStack = project.stack.slice(0, 3);
   const hiddenCount = project.stack.length - visibleStack.length;
   const highlights = project.cardHighlights ?? project.highlights.slice(0, 2);
@@ -126,15 +129,15 @@ export function ProjectCard({ project, fromHome = false }: { project: Project; f
           <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${t.overlay}`} />
 
           <div className="relative z-10 w-full overflow-hidden flex-1">
-            {project.cover && (
+            {cover && (
               <div className="mb-4 aspect-16/10 w-full overflow-hidden rounded-xl border border-border/60 bg-surface-elevated">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={project.cover}
+                  src={cover}
                   alt=""
                   aria-hidden
                   loading="lazy"
-                  className={`h-full w-full ${project.coverFit === "contain" ? "object-contain" : "object-cover object-top"} transition-transform duration-500 group-hover:scale-[1.03]`}
+                  className={`h-full w-full ${containCover ? "object-contain" : "object-cover object-top"} transition-transform duration-500 group-hover:scale-[1.03]`}
                 />
               </div>
             )}

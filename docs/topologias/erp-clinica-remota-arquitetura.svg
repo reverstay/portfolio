@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941" font-family="Poppins, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0" stop-color="#1b1d22"/>
+      <stop offset="1" stop-color="#0b0c0f"/>
+    </radialGradient>
+    <linearGradient id="srvTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b7280"/><stop offset="1" stop-color="#4b5563"/></linearGradient>
+    <linearGradient id="srvL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f4651"/><stop offset="1" stop-color="#2a2f37"/></linearGradient>
+    <linearGradient id="srvR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#525b68"/><stop offset="1" stop-color="#363c46"/></linearGradient>
+    <linearGradient id="dbBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f6fd6"/><stop offset=".5" stop-color="#4f8ff0"/><stop offset="1" stop-color="#2a5fb8"/></linearGradient>
+    <linearGradient id="redisBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9302a"/><stop offset=".5" stop-color="#e3473d"/><stop offset="1" stop-color="#a42822"/></linearGradient>
+    <linearGradient id="cloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfe0f5"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f2937"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".55"/></filter>
+    <filter id="glowO" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="aO" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f5a524"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6ee7a8"/></marker>
+    <marker id="aD" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker>
+    <!-- servidor isométrico -->
+    <g id="server">
+      <path d="M0,22 L60,0 L120,22 L60,44 z" fill="url(#srvTop)"/>
+      <path d="M0,22 L60,44 L60,164 L0,142 z" fill="url(#srvL)"/>
+      <path d="M120,22 L60,44 L60,164 L120,142 z" fill="url(#srvR)"/>
+      <g fill="#1f242c"><path d="M70,62 L110,47 L110,59 L70,74 z"/><path d="M70,90 L110,75 L110,87 L70,102 z"/><path d="M70,118 L110,103 L110,115 L70,130 z"/></g>
+      <g fill="#6ee7a8"><circle cx="102" cy="55" r="2.6"/><circle cx="102" cy="83" r="2.6"/><circle cx="102" cy="111" r="2.6"/></g>
+    </g>
+  </defs>
+
+  <rect width="1672" height="941" fill="url(#bg)"/>
+  
+
+  <!-- título -->
+  <text x="836" y="78" text-anchor="middle" font-size="58" font-weight="700" fill="#f6d9a8" filter="url(#glowO)">ERP Clínica Remota</text>
+  <text x="836" y="118" text-anchor="middle" font-size="24" fill="#f5a524">Arquitetura ilustrada</text>
+  <rect x="796" y="132" width="80" height="5" rx="2.5" fill="#f5a524"/>
+
+  <!-- ===== conexões ===== -->
+  <g fill="none" stroke-width="5" stroke-linecap="round">
+    <!-- navegador <-> nginx -->
+    <path d="M345,420 H455" stroke="#f5a524" marker-start="url(#aO)" marker-end="url(#aO)"/>
+    <!-- nginx <-> django -->
+    <path d="M640,420 H760" stroke="#f5a524" marker-start="url(#aO)" marker-end="url(#aO)"/>
+    <!-- django <-> postgres -->
+    <path d="M790,560 L720,640" stroke="#f5a524" marker-start="url(#aO)" marker-end="url(#aO)"/>
+    <!-- django <-> redis -->
+    <path d="M900,560 L975,640" stroke="#6ee7a8" marker-start="url(#aG)" marker-end="url(#aG)"/>
+    <!-- django -> google -->
+    <path d="M940,350 C1050,250 1140,215 1250,205" stroke="#f5a524" marker-end="url(#aO)"/>
+    <!-- api clínica remota -> django -->
+    <path d="M1250,440 H955" stroke="#6ee7a8" marker-end="url(#aG)"/>
+    <!-- legado -> django (migração única) -->
+    <path d="M1262,730 C1150,900 880,900 790,775" stroke="#9ca3af" stroke-dasharray="10 10" marker-end="url(#aD)"/>
+  </g>
+
+  <!-- rótulos das conexões -->
+  <g font-size="17" font-weight="600" text-anchor="middle">
+    <rect x="335" y="356" width="130" height="34" rx="10" fill="#1a1406" stroke="#f5a524" stroke-width="2"/>
+    <text x="400" y="379" fill="#f6d9a8">HTTP / WS</text>
+
+    <rect x="608" y="356" width="184" height="34" rx="10" fill="#1a1406" stroke="#f5a524" stroke-width="2"/>
+    <text x="700" y="379" fill="#f6d9a8">/api · /ws · páginas</text>
+
+    <rect x="1010" y="196" width="150" height="34" rx="10" fill="#1a1406" stroke="#f5a524" stroke-width="2"/>
+    <text x="1085" y="219" fill="#f6d9a8">OAuth (allauth)</text>
+
+    <rect x="1000" y="456" width="208" height="56" rx="10" fill="#0b1a12" stroke="#6ee7a8" stroke-width="2"/>
+    <text x="1104" y="479" fill="#bff5d6">inventário e</text>
+    <text x="1104" y="501" fill="#bff5d6">disponibilidade</text>
+
+    <rect x="950" y="604" width="140" height="34" rx="10" fill="#0b1a12" stroke="#6ee7a8" stroke-width="2"/>
+    <text x="1020" y="627" fill="#bff5d6">chat ao vivo</text>
+
+    <rect x="950" y="852" width="230" height="34" rx="10" fill="#15171b" stroke="#9ca3af" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="1065" y="875" fill="#d1d5db">migração única (comando)</text>
+  </g>
+
+  <!-- ===== navegador: notebook + celular ===== -->
+  <g filter="url(#soft)">
+    <g transform="translate(60,330)">
+      <path d="M20,0 H240 a10,10 0 0 1 10,10 V150 H10 V10 a10,10 0 0 1 10,-10 z" fill="#c7cdd6"/>
+      <rect x="22" y="12" width="216" height="128" rx="4" fill="url(#screen)"/>
+      <rect x="22" y="12" width="44" height="128" fill="#0f766e" opacity=".55"/>
+      <g fill="#10b981"><rect x="30" y="24" width="28" height="6" rx="3"/></g>
+      <g fill="#374151"><rect x="30" y="40" width="28" height="4" rx="2"/><rect x="30" y="50" width="28" height="4" rx="2"/><rect x="30" y="60" width="28" height="4" rx="2"/><rect x="30" y="70" width="28" height="4" rx="2"/></g>
+      <g fill="#1f2937" stroke="#334155"><rect x="76" y="26" width="46" height="34" rx="4"/><rect x="128" y="26" width="46" height="34" rx="4"/><rect x="180" y="26" width="46" height="34" rx="4"/><rect x="76" y="68" width="150" height="60" rx="4"/></g>
+      <g fill="#10b981"><rect x="82" y="32" width="10" height="8" rx="2"/><rect x="134" y="32" width="10" height="8" rx="2"/><rect x="186" y="32" width="10" height="8" rx="2"/></g>
+      <path d="M-10,150 H270 L284,168 H-24 z" fill="#9aa3af"/>
+      <rect x="100" y="152" width="60" height="6" rx="3" fill="#6b7280"/>
+    </g>
+    <g transform="translate(270,410)">
+      <rect width="66" height="126" rx="12" fill="#1f2937" stroke="#9aa3af" stroke-width="3"/>
+      <rect x="6" y="12" width="54" height="100" rx="4" fill="#0b1220"/>
+      <rect x="12" y="20" width="42" height="18" rx="3" fill="#1f2937"/>
+      <rect x="12" y="44" width="42" height="18" rx="3" fill="#1f2937"/>
+      <rect x="12" y="68" width="42" height="18" rx="3" fill="#1f2937"/>
+      <rect x="40" y="94" width="16" height="12" rx="3" fill="#10b981"/>
+      <rect x="25" y="4" width="16" height="3" rx="1.5" fill="#4b5563"/>
+    </g>
+  </g>
+  <text x="190" y="580" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">Equipe</text>
+  <text x="190" y="606" text-anchor="middle" font-size="16" fill="#9ca3af">navegador · desktop e celular</text>
+
+  <!-- ===== nginx (react) ===== -->
+  <g filter="url(#soft)" transform="translate(488,330)">
+    <use href="#server"/>
+    <g transform="translate(14,66) skewY(22)">
+      <rect width="38" height="38" rx="6" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+      <text x="19" y="27" text-anchor="middle" font-size="22" font-weight="800" fill="#22c55e">N</text>
+    </g>
+  </g>
+  <text x="548" y="532" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">Nginx</text>
+  <text x="548" y="558" text-anchor="middle" font-size="16" fill="#9ca3af">React (Vite) + proxy</text>
+
+  <!-- ===== django asgi ===== -->
+  <g filter="url(#soft)" transform="translate(790,300) scale(1.2)">
+    <use href="#server"/>
+    <g transform="translate(12,60) skewY(22)">
+      <rect width="40" height="40" rx="6" fill="#0c3b2e"/>
+      <text x="20" y="29" text-anchor="middle" font-size="24" font-weight="800" fill="#44b78b">dj</text>
+    </g>
+  </g>
+  <text x="862" y="282" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">Django ASGI</text>
+  <text x="862" y="258" text-anchor="middle" font-size="16" fill="#9ca3af">Gunicorn + Uvicorn · Channels</text>
+
+  <!-- módulos -->
+  <text x="400" y="160" font-size="14" font-weight="600" fill="#9ca3af" letter-spacing="1">MÓDULOS DO BACKEND</text>
+  <g font-size="14" font-weight="600" text-anchor="middle" fill="#e5e7eb">
+    <g transform="translate(400,170)">
+      <rect x="0" y="0" width="96" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="48" y="19">Compras</text>
+      <rect x="104" y="0" width="90" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="149" y="19">Estoque</text>
+      <rect x="202" y="0" width="94" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="249" y="19">Produção</text>
+      <rect x="304" y="0" width="110" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="359" y="19">Documentos</text>
+    </g>
+    <g transform="translate(440,204)">
+      <rect x="0" y="0" width="70" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="35" y="19">Chat</text>
+      <rect x="78" y="0" width="130" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="143" y="19">Relatórios PDF</text>
+      <rect x="216" y="0" width="120" height="28" rx="14" fill="#1f2937" stroke="#374151"/><text x="276" y="19">Notificações</text>
+    </g>
+  </g>
+
+  <!-- ===== postgresql ===== -->
+  <g filter="url(#soft)" transform="translate(640,650)">
+    <path d="M0,22 V112 A70,22 0 0 0 140,112 V22" fill="url(#dbBody)"/>
+    <ellipse cx="70" cy="22" rx="70" ry="22" fill="#7fb0ff"/>
+    <path d="M0,52 A70,22 0 0 0 140,52 M0,82 A70,22 0 0 0 140,82" fill="none" stroke="#9cc3ff" stroke-width="3" opacity=".7"/>
+  </g>
+  <text x="710" y="822" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">PostgreSQL 16</text>
+
+  <!-- ===== redis ===== -->
+  <g filter="url(#soft)" transform="translate(960,660)">
+    <path d="M0,18 L55,0 L110,18 L55,36 z" fill="#f2665c"/>
+    <path d="M0,18 L55,36 L55,70 L0,52 z" fill="#a42822"/>
+    <path d="M110,18 L55,36 L55,70 L110,52 z" fill="url(#redisBody)"/>
+    <path d="M0,58 L55,76 L110,58 L110,92 L55,110 L0,92 z" fill="#8f231e"/>
+    <path d="M55,76 L110,58 L110,92 L55,110 z" fill="#c9372f"/>
+    <g fill="#fff" opacity=".9"><path d="M40,14 l8,-4 l3,5 l-8,4 z"/><circle cx="68" cy="16" r="3"/></g>
+  </g>
+  <text x="1015" y="804" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">Redis 7</text>
+  <text x="1015" y="828" text-anchor="middle" font-size="16" fill="#9ca3af">camada do Channels</text>
+
+  <!-- ===== google ===== -->
+  <g filter="url(#soft)" transform="translate(1262,140)">
+    <path d="M40,110 a40,40 0 0 1 4,-80 a56,56 0 0 1 104,-6 a44,44 0 0 1 38,86 z" fill="url(#cloud)"/>
+    <g transform="translate(92,48)">
+      <circle r="26" fill="#fff" stroke="#e5e7eb" stroke-width="2"/>
+      <path d="M14,-2 H0 V5 H8 A9,9 0 1 1 6,-8" fill="none" stroke="#4285f4" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-8,-7 A11,11 0 0 1 6,-8" fill="none" stroke="#ea4335" stroke-width="5"/>
+      <path d="M-10,6 A11,11 0 0 1 -8,-7" fill="none" stroke="#fbbc05" stroke-width="5"/>
+      <path d="M8,5 A11,11 0 0 1 -10,6" fill="none" stroke="#34a853" stroke-width="5"/>
+    </g>
+  </g>
+  <text x="1355" y="282" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">Login Google</text>
+
+  <!-- ===== api clínica remota ===== -->
+  <g filter="url(#soft)" transform="translate(1262,370)">
+    <path d="M40,120 a42,42 0 0 1 4,-84 a58,58 0 0 1 108,-6 a46,46 0 0 1 40,90 z" fill="url(#cloud)"/>
+    <g transform="translate(70,48)">
+      <rect width="60" height="44" rx="6" fill="#0f172a"/>
+      <path d="M6,26 H18 L24,12 L32,36 L38,22 H54" fill="none" stroke="#10b981" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+    </g>
+  </g>
+  <text x="1360" y="520" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">API Clínica Remota</text>
+  <text x="1360" y="546" text-anchor="middle" font-size="16" fill="#9ca3af">clínicas, ativos e eventos de telemetria</text>
+
+  <!-- ===== legado flask ===== -->
+  <g filter="url(#soft)" transform="translate(1262,640)">
+    <path d="M0,24 L70,0 L140,24 L70,48 z" fill="#a3a3a3"/>
+    <path d="M0,24 L70,48 L70,128 L0,104 z" fill="#5b5f66"/>
+    <path d="M140,24 L70,48 L70,128 L140,104 z" fill="#74787f"/>
+    <path d="M20,30 L70,13 L120,30" fill="none" stroke="#e5e7eb" stroke-width="3" opacity=".6"/>
+    <g transform="translate(84,64) skewY(-19)"><rect width="42" height="30" rx="4" fill="#2b2f36"/><text x="21" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#d1d5db">.db</text></g>
+  </g>
+  <text x="1332" y="802" text-anchor="middle" font-size="22" font-weight="700" fill="#f3f4f6">Flask legado</text>
+  <text x="1332" y="828" text-anchor="middle" font-size="16" fill="#9ca3af">dados e arquivos anteriores</text>
+
+  <!-- legenda -->
+  <g transform="translate(46,800)">
+    <rect width="330" height="116" rx="14" fill="#111317" stroke="#2d3139" stroke-dasharray="6 6"/>
+    <g stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M22,30 H92" stroke="#f5a524" marker-end="url(#aO)"/>
+      <path d="M22,62 H92" stroke="#6ee7a8" marker-end="url(#aG)"/>
+      <path d="M22,94 H92" stroke="#9ca3af" stroke-dasharray="10 10" marker-end="url(#aD)"/>
+    </g>
+    <g font-size="17" font-weight="600">
+      <text x="112" y="36" fill="#f6d9a8">Requisições</text>
+      <text x="112" y="68" fill="#bff5d6">Tempo real e sincronização</text>
+      <text x="112" y="100" fill="#d1d5db">Migração dos dados</text>
+    </g>
+  </g>
+</svg>
