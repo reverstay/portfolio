@@ -126,6 +126,18 @@ export function ProjectCard({ project, fromHome = false }: { project: Project; f
           <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${t.overlay}`} />
 
           <div className="relative z-10 w-full overflow-hidden flex-1">
+            {project.cover && (
+              <div className="mb-4 aspect-16/10 w-full overflow-hidden rounded-xl border border-border/60 bg-surface-elevated">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={project.cover}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+            )}
             <div className={`mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 ${project.logo ? "justify-between" : "justify-end"}`}>
               {project.logo && (
                 // eslint-disable-next-line @next/next/no-img-element

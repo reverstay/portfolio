@@ -18,11 +18,11 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   return (
     <main className="w-full flex flex-col max-w-5xl mx-auto px-4 sm:px-6">
       <Hero />
+      <FeaturedProjects />
+      <HomeTimeline />
       <StackSection />
       <GithubActivity lang={lang} />
-      <FeaturedProjects />
       <Testimonials />
-      <HomeTimeline />
     </main>
   );
 }

@@ -28,6 +28,20 @@ const rawGroups = [
 
 export type ProjectGroup = (typeof rawGroups)[number]["id"];
 
+// "screenshot": captura real do sistema (ambiente de demonstração, dados fictícios).
+// "architecture": ilustração da arquitetura feita a partir do código; não é print.
+export type MediaKind = "screenshot" | "architecture";
+
+type RawMedia = {
+  src: string;
+  kind: MediaKind;
+  device?: "desktop" | "mobile";
+  alt: Text;
+  caption: Text;
+};
+
+export type ProjectMedia = Resolved<RawMedia>;
+
 type RawProject = {
   slug: string;
   title: Text;
@@ -51,6 +65,12 @@ type RawProject = {
   // Logo do cliente/produto (PNG com fundo transparente), exibido no card e no topo da página
   logo?: string;
   images: string[];
+  // Galeria com legenda; quando existe, substitui `images` na página do projeto
+  media?: RawMedia[];
+  // Imagem do produto exibida no card
+  cover?: string;
+  // O link de demoUrl leva a um login, não a uma demonstração aberta
+  demoIsLogin?: boolean;
   videoUrl?: string;
   // "phone" mostra o vídeo numa moldura de celular; "wide" em tela cheia. Padrão: wide se isWeb.
   videoLayout?: "phone" | "wide";
@@ -94,10 +114,12 @@ const raw: RawProject[] = [
     stack: [
       "Python",
       "Django",
+      "React",
       "PostgreSQL",
       "Paradox",
-      "Java",
       "Dropbox",
+      "PWA / Web Push",
+      "Java",
       "Railway",
       "Nginx",
       { pt: "Agendador de Tarefas do Windows", en: "Windows Task Scheduler" },
@@ -108,12 +130,16 @@ const raw: RawProject[] = [
         "Processamento em lotes com registro de logs e conferência de registros.",
         "Novas tentativas automáticas via Agendador de Tarefas do Windows.",
         "Otimização do consumo de memória nas importações.",
+        "Painel web e app instalável (PWA) com telão de produção, pedidos, delivery e avisos por push.",
+        "Permissões por papel e por unidade, aplicadas na API.",
       ],
       en: [
         "Migration and synchronization of local Paradox databases to PostgreSQL.",
         "Batch processing with logging and record verification.",
         "Automatic retries via Windows Task Scheduler.",
         "Memory usage optimization during imports.",
+        "Web dashboard and installable app (PWA) with production board, orders, delivery and push notifications.",
+        "Role- and location-based permissions enforced by the API.",
       ],
     },
     cardHighlights: {
@@ -121,7 +147,125 @@ const raw: RawProject[] = [
       en: ["Paradox databases synced to the cloud.", "Batch imports with logging and verification."],
     },
     images: [],
+    cover: "/projects/blanche/cover.webp",
+    media: [
+      {
+        src: "/projects/topologias/blanche-arquitetura.png",
+        kind: "architecture",
+        alt: {
+          pt: "Mapa ilustrado: seis lavanderias com bases Paradox enviam dados ao Dropbox; um coletor grava no PostgreSQL, servido por uma API Django a um front-end React instalável.",
+          en: "Illustrated map: six laundries with Paradox databases send data to Dropbox; a collector writes it to PostgreSQL, served by a Django API to an installable React front end.",
+        },
+        caption: {
+          pt: "As bases Paradox de cada loja chegam pelo Dropbox. O coletor converte e importa os dados no PostgreSQL; a API Django enfileira novas coletas e atende o painel web e o app.",
+          en: "Each store's Paradox databases arrive through Dropbox. The collector converts and imports them into PostgreSQL; the Django API queues new runs and serves the web dashboard and the app.",
+        },
+      },
+      {
+        src: "/projects/blanche/desktop/03-dashboard.webp",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Dashboard com pedidos, pendências, atrasos, faturamento e ticket médio das seis unidades.",
+          en: "Dashboard with orders, pending and late items, revenue and average ticket across six locations.",
+        },
+        caption: {
+          pt: "Dashboard consolidado da rede: indicadores por período, com gráficos que abrem a lista de pedidos correspondente.",
+          en: "Network-wide dashboard: indicators by period, with charts that open the matching list of orders.",
+        },
+      },
+      {
+        src: "/projects/blanche/desktop/04-telao.webp",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Telão com fichas das comandas do dia, separadas por unidade, status e urgência.",
+          en: "Production board with the day's tickets, by location, status and urgency.",
+        },
+        caption: {
+          pt: "Telão da produção: cada ficha mostra as peças que ainda faltam sair, com baixa por peça ou da comanda inteira.",
+          en: "Production board: each ticket shows the items still to go out, cleared one item at a time or all at once.",
+        },
+      },
+      {
+        src: "/projects/blanche/desktop/05-pedidos.webp",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Grade de pedidos com ROL, cliente, entrega, valores, despacho e situação.",
+          en: "Order grid with ticket number, customer, due date, amounts, dispatch and status.",
+        },
+        caption: {
+          pt: "Grade de pedidos no formato do sistema legado das lojas, com atalhos de teclado e cores por situação de pagamento.",
+          en: "Order grid in the layout of the stores' legacy system, with keyboard shortcuts and colors by payment status.",
+        },
+      },
+      {
+        src: "/projects/blanche/desktop/07-delivery.webp",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Quadro de delivery com colunas de pedidos novos, confirmados e em rota.",
+          en: "Delivery board with columns for new, confirmed and en-route orders.",
+        },
+        caption: {
+          pt: "Delivery: coletas e entregas em domicílio organizadas em quadro; pedidos feitos pelo site entram como novos.",
+          en: "Delivery: home pickups and drop-offs on a board; orders placed on the website arrive as new.",
+        },
+      },
+      {
+        src: "/projects/blanche/desktop/08-backup.webp",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Painel de backup com estado da última coleta, unidades sincronizadas, falhas e agenda automática.",
+          en: "Backup panel with last run status, synced locations, failures and automatic schedule.",
+        },
+        caption: {
+          pt: "Backup das lojas: estado da sincronização, falhas por unidade, versões guardadas no Dropbox e horários da coleta automática.",
+          en: "Store backups: sync status, failures per location, versions kept in Dropbox and automatic collection times.",
+        },
+      },
+      {
+        src: "/projects/blanche/desktop/10-permissoes.webp",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Tabela de papéis (master, administrador, operacional, caixa) e o que cada um pode fazer.",
+          en: "Table of roles (master, administrator, operations, cashier) and what each can do.",
+        },
+        caption: {
+          pt: "Papéis e permissões: a tabela é gerada do mesmo código que aplica as regras na API.",
+          en: "Roles and permissions: the table is generated from the same code that enforces the rules in the API.",
+        },
+      },
+      {
+        src: "/projects/blanche/mobile/03-telao.webp",
+        kind: "screenshot",
+        device: "mobile",
+        alt: { pt: "Telão no celular, com filtro de unidades e ficha de comanda.", en: "Production board on a phone, with location filter and a ticket card." },
+        caption: { pt: "Telão no celular, com navegação inferior.", en: "Production board on a phone, with bottom navigation." },
+      },
+      {
+        src: "/projects/blanche/mobile/02-instalar-app.webp",
+        kind: "screenshot",
+        device: "mobile",
+        alt: { pt: "Tela inicial no celular com convite para instalar o app.", en: "Mobile home screen with a prompt to install the app." },
+        caption: { pt: "Instalação como app (PWA), que abre em tela cheia pelo ícone.", en: "Install as an app (PWA), opening full screen from its icon." },
+      },
+      {
+        src: "/projects/blanche/mobile/05-avisos.webp",
+        kind: "screenshot",
+        device: "mobile",
+        alt: {
+          pt: "Central de avisos com coleta concluída, comanda urgente, backup atrasado e novo pedido.",
+          en: "Notification center with finished sync, urgent ticket, late backup and new order.",
+        },
+        caption: { pt: "Central de avisos, também enviados por push ao aparelho.", en: "Notification center, also delivered as push notifications." },
+      },
+    ],
     demoUrl: "https://blanche.neuverse.com.br/login",
+    demoIsLogin: true,
   },
   {
     slug: "comando-remoto",
@@ -166,6 +310,47 @@ const raw: RawProject[] = [
       en: ["KVM over IP with a Raspberry Pi 5.", "Low-latency video with WebRTC."],
     },
     images: [],
+    cover: "/projects/comando-remoto/ativos-desktop.png",
+    media: [
+      {
+        src: "/projects/topologias/comando-remoto-arquitetura.png",
+        kind: "architecture",
+        alt: {
+          pt: "Arquitetura ilustrada: React, Django Channels, PostgreSQL, Raspberry Pi, USB HID, PWM e vídeo via MediaMTX.",
+          en: "Illustrated architecture: React, Django Channels, PostgreSQL, Raspberry Pi, USB HID, PWM and video through MediaMTX.",
+        },
+        caption: {
+          pt: "Comandos seguem da aplicação React ao Django Channels e ao Raspberry Pi; USB HID e PWM conectam o controle ao hardware. O vídeo é distribuído pelo MediaMTX via WebRTC/WHEP. Ilustração conceitual, sem representar uma instalação física específica.",
+          en: "Commands flow from React through Django Channels to the Raspberry Pi; USB HID and PWM connect control to hardware. MediaMTX delivers video over WebRTC/WHEP. Conceptual illustration, not a depiction of a specific physical installation.",
+        },
+      },
+      {
+        src: "/projects/comando-remoto/ativos-desktop.png",
+        kind: "screenshot",
+        device: "desktop",
+        alt: {
+          pt: "Painel de ativos do Comando Remoto com dispositivo de demonstração offline e alertas de comunicação.",
+          en: "Comando Remoto asset panel with an offline demo device and communication alerts.",
+        },
+        caption: {
+          pt: "Lista de ativos com identificação do equipamento, estado da conexão e últimos alertas. Captura real em ambiente local com dados fictícios e dispositivo offline; não demonstra streaming nem acionamento físico.",
+          en: "Asset list showing equipment identification, connection status and recent alerts. Actual capture from a local environment with fictitious data and an offline device; it does not demonstrate streaming or physical actuation.",
+        },
+      },
+      {
+        src: "/projects/comando-remoto/ativos-mobile.png",
+        kind: "screenshot",
+        device: "mobile",
+        alt: {
+          pt: "Lista de ativos e alertas do Comando Remoto em tela de celular, com dispositivo fictício offline.",
+          en: "Comando Remoto asset list and alerts on a mobile screen, with a fictitious offline device.",
+        },
+        caption: {
+          pt: "A mesma interface em tela de celular: navegação compacta e consulta ao estado do ativo. Dados fictícios, sem hardware conectado.",
+          en: "The same interface on a mobile screen: compact navigation and asset status. Fictitious data, with no connected hardware.",
+        },
+      },
+    ],
   },
   {
     slug: "robo-autonomo-lidar",

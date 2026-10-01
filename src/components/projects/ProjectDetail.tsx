@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { PlayIllustration } from "@/components/ui/Illustrations";
-import type { Project } from "@/data/projects";
+import type { Project, ProjectMedia } from "@/data/projects";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const container: Variants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.12 } } };
@@ -15,13 +15,32 @@ const item: Variants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
 
-function DiagramModal({ src, title, onClose }: { src: string; title: string; onClose: () => void }) {
+type ZoomTarget = { src: string; alt: string; heading: string };
+
+function DiagramModal({ src, alt, heading, onClose }: ZoomTarget & { onClose: () => void }) {
   const { t } = useI18n();
   const [zoom, setZoom] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const pinchDist = useRef<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  // Escape fecha; o foco volta ao elemento que abriu o diálogo
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onCloseRef.current();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      opener?.focus();
+    };
+  }, []);
 
   const setClampedZoom = (fn: (z: number) => number) =>
     setZoom((z) => {
@@ -41,24 +60,39 @@ function DiagramModal({ src, title, onClose }: { src: string; title: string; onC
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6" onClick={onClose}>
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="zoom-modal-title"
         className="relative max-w-6xl w-full bg-surface border border-border rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between pb-4 border-b border-border gap-2 flex-wrap">
-          <h3 className="font-display text-base sm:text-lg font-medium text-text">{t.projects.diagram} - {title}</h3>
+          <h3 id="zoom-modal-title" className="font-display text-base sm:text-lg font-medium text-text">
+            {heading}
+          </h3>
           <div className="flex items-center gap-2">
             <div className="flex items-center bg-black/20 border border-border rounded-xl p-1 gap-1">
-              <button type="button" onClick={() => setClampedZoom((z) => z - 0.5)} className="px-2.5 py-1 text-xs text-text-muted hover:text-accent rounded-lg">
+              <button
+                type="button"
+                aria-label={t.projects.zoomOut}
+                onClick={() => setClampedZoom((z) => z - 0.5)}
+                className="px-2.5 py-1 text-xs text-text-muted hover:text-accent rounded-lg"
+              >
                 -
               </button>
-              <button type="button" onClick={reset} className="px-2 py-1 text-xs text-text-muted hover:text-accent rounded-lg">
+              <button type="button" aria-label={t.projects.zoomReset} onClick={reset} className="px-2 py-1 text-xs text-text-muted hover:text-accent rounded-lg">
                 {Math.round(zoom * 100)}%
               </button>
-              <button type="button" onClick={() => setClampedZoom((z) => z + 0.5)} className="px-2.5 py-1 text-xs text-text-muted hover:text-accent rounded-lg">
+              <button
+                type="button"
+                aria-label={t.projects.zoomIn}
+                onClick={() => setClampedZoom((z) => z + 0.5)}
+                className="px-2.5 py-1 text-xs text-text-muted hover:text-accent rounded-lg"
+              >
                 +
               </button>
             </div>
-            <button type="button" onClick={onClose} className="p-2 rounded-xl text-text-muted hover:text-accent">
+            <button ref={closeRef} type="button" aria-label={t.projects.close} onClick={onClose} className="p-2 rounded-xl text-text-muted hover:text-accent">
               ✕
             </button>
           </div>
@@ -96,7 +130,7 @@ function DiagramModal({ src, title, onClose }: { src: string; title: string; onC
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
-            alt="Diagrama"
+            alt={alt}
             style={{ transform: `translate(${pos.x}px, ${pos.y}px) scale(${zoom})`, transition: dragging ? "none" : "transform 0.1s ease-out" }}
             className="max-h-full max-w-full object-contain pointer-events-none"
           />
@@ -106,10 +140,85 @@ function DiagramModal({ src, title, onClose }: { src: string; title: string; onC
   );
 }
 
+function MediaFigure({ media, wide, onOpen }: { media: ProjectMedia; wide: boolean; onOpen: () => void }) {
+  const { t } = useI18n();
+  return (
+    <figure className="flex flex-col gap-2">
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={`${t.projects.enlarge}: ${media.alt}`}
+        className={`group relative w-full overflow-hidden border border-border/60 bg-surface cursor-zoom-in transition-colors hover:border-accent/50 ${
+          wide ? "rounded-2xl" : "rounded-3xl aspect-780/1688"
+        }`}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={media.src} alt={media.alt} loading="lazy" className={`w-full ${wide ? "h-auto" : "h-full object-cover object-top"}`} />
+      </button>
+      <figcaption className="text-xs sm:text-sm leading-relaxed text-text-muted">{media.caption}</figcaption>
+    </figure>
+  );
+}
+
+function MediaGallery({ media, onOpen }: { media: ProjectMedia[]; onOpen: (m: ProjectMedia, heading: string) => void }) {
+  const { t: dict } = useI18n();
+  const t = dict.projects;
+  const architecture = media.filter((m) => m.kind === "architecture");
+  const desktop = media.filter((m) => m.kind === "screenshot" && m.device !== "mobile");
+  const mobile = media.filter((m) => m.kind === "screenshot" && m.device === "mobile");
+
+  return (
+    <div className="flex flex-col gap-10 sm:gap-12">
+      {architecture.length > 0 && (
+        <section>
+          <h2 className="mb-1 font-display text-base sm:text-lg font-medium text-text">{t.architecture}</h2>
+          <p className="mb-4 text-xs text-text-muted/80">{t.architectureNote}</p>
+          <div className="flex flex-col gap-6">
+            {architecture.map((m) => (
+              <MediaFigure key={m.src} media={m} wide onOpen={() => onOpen(m, t.architecture)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {(desktop.length > 0 || mobile.length > 0) && (
+        <section>
+          <h2 className="mb-1 font-display text-base sm:text-lg font-medium text-text">{t.gallery}</h2>
+          <p className="mb-5 text-xs text-text-muted/80">{t.galleryNote}</p>
+
+          {desktop.length > 0 && (
+            <>
+              {mobile.length > 0 && <h3 className="mb-3 font-mono text-xs text-accent">// {t.desktopScreens.toLowerCase()}</h3>}
+              <div className="flex flex-col gap-8">
+                {desktop.map((m) => (
+                  <MediaFigure key={m.src} media={m} wide onOpen={() => onOpen(m, t.desktopScreens)} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {mobile.length > 0 && (
+            <>
+              <h3 className={`mb-3 font-mono text-xs text-accent ${desktop.length > 0 ? "mt-10" : ""}`}>// {t.mobileScreens.toLowerCase()}</h3>
+              <div className="flex overflow-x-auto sm:grid sm:grid-cols-3 gap-5 pb-4 snap-x snap-mandatory scrollbar-thin">
+                {mobile.map((m) => (
+                  <div key={m.src} className="shrink-0 w-[70%] sm:w-auto snap-center">
+                    <MediaFigure media={m} wide={false} onOpen={() => onOpen(m, t.mobileScreens)} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </section>
+      )}
+    </div>
+  );
+}
+
 export function ProjectDetail({ project, fromHome }: { project: Project; fromHome: boolean }) {
   const { t: dict, href } = useI18n();
   const t = dict.projects;
-  const [diagramOpen, setDiagramOpen] = useState(false);
+  const [zoomed, setZoomed] = useState<ZoomTarget | null>(null);
   const isWeb = !!project.isWeb;
   const wideVideo = project.videoLayout ? project.videoLayout === "wide" : isWeb;
 
@@ -145,7 +254,39 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
         {project.description}
       </motion.p>
 
-      {project.images.length > 0 && (
+      {/* Resumo do caso antes da mídia: contexto → atuação → resultados */}
+      <motion.div variants={item} className="mt-8 sm:mt-10">
+        <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.about}</h2>
+        <p className="text-sm sm:text-base leading-relaxed text-text-muted">{project.longDescription}</p>
+      </motion.div>
+
+      {project.role && (
+        <motion.div variants={item} className="mt-8">
+          <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.role}</h2>
+          <p className="text-sm sm:text-base leading-relaxed text-text-muted">{project.role}</p>
+        </motion.div>
+      )}
+
+      {project.results && project.results.length > 0 && (
+        <motion.div variants={item} className="mt-8">
+          <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.results}</h2>
+          <ul className="flex flex-col gap-2">
+            {project.results.map((r) => (
+              <li key={r} className="flex items-start gap-2 text-xs sm:text-sm text-text-muted leading-relaxed">
+                <span className="mt-0.5 text-accent shrink-0">→</span>
+                <span>{r}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
+
+      {project.media && project.media.length > 0 ? (
+        <motion.div variants={item} className="mt-12 sm:mt-14">
+          <MediaGallery media={project.media} onOpen={(m, heading) => setZoomed({ src: m.src, alt: m.alt, heading })} />
+        </motion.div>
+      ) : (
+        project.images.length > 0 && (
         <motion.div variants={item}>
           {isWeb ? (
             <div className="mt-8 sm:mt-10 flex flex-col gap-4">
@@ -170,6 +311,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
             </div>
           )}
         </motion.div>
+        )
       )}
 
       {project.diagramUrl && (
@@ -177,7 +319,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
           <h2 className="mb-3 font-display text-base sm:text-lg font-medium text-text">{t.diagram}</h2>
           <button
             type="button"
-            onClick={() => setDiagramOpen(true)}
+            onClick={() => project.diagramUrl && setZoomed({ src: project.diagramUrl, alt: t.diagram, heading: `${t.diagram} - ${project.title}` })}
             className="inline-flex h-10 items-center justify-center rounded-xl border border-border/80 bg-surface px-6 text-sm font-medium text-text-muted hover:text-accent hover:border-accent/40 hover:bg-surface/80 shadow-sm transition-all duration-200 cursor-pointer outline-none active:scale-[0.98]"
           >
             {t.viewDiagram}
@@ -232,33 +374,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
         </motion.div>
       )}
 
-      <motion.div variants={item} className="mt-8 sm:mt-10">
-        <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.about}</h2>
-        <p className="text-sm sm:text-base leading-relaxed text-text-muted">{project.longDescription}</p>
-      </motion.div>
-
-      {project.role && (
-        <motion.div variants={item} className="mt-8">
-          <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.role}</h2>
-          <p className="text-sm sm:text-base leading-relaxed text-text-muted">{project.role}</p>
-        </motion.div>
-      )}
-
-      {project.results && project.results.length > 0 && (
-        <motion.div variants={item} className="mt-8">
-          <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.results}</h2>
-          <ul className="flex flex-col gap-2">
-            {project.results.map((r) => (
-              <li key={r} className="flex items-start gap-2 text-xs sm:text-sm text-text-muted leading-relaxed">
-                <span className="mt-0.5 text-accent shrink-0">→</span>
-                <span>{r}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
-
-      <motion.div variants={item} className="mt-8">
+      <motion.div variants={item} className="mt-10 sm:mt-12">
         <h2 className="mb-2 sm:mb-3 font-display text-base sm:text-lg font-medium text-text">{t.highlights}</h2>
         <ul className="flex flex-col gap-2">
           {project.highlights.map((h) => (
@@ -279,7 +395,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
       <motion.div variants={item} className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full">
         {project.demoUrl && (
           <Button variant="primary" href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto justify-center rounded-xl">
-            {t.visit}
+            {project.demoIsLogin ? t.login : t.visit}
           </Button>
         )}
         {project.isNda ? (
@@ -296,9 +412,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
         )}
       </motion.div>
 
-      {diagramOpen && project.diagramUrl && (
-        <DiagramModal src={project.diagramUrl} title={project.title} onClose={() => setDiagramOpen(false)} />
-      )}
+      {zoomed && <DiagramModal {...zoomed} onClose={() => setZoomed(null)} />}
     </motion.main>
   );
 }
