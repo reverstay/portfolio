@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="Segoe UI, Arial, sans-serif">
+ <defs>
+  <radialGradient id="bg"><stop stop-color="#202a3b"/><stop offset="1" stop-color="#0b101a"/></radialGradient>
+  <linearGradient id="board" x2="0.8" y2="1"><stop stop-color="#319c87"/><stop offset="1" stop-color="#135349"/></linearGradient>
+  <linearGradient id="metal" x2="1" y2="1"><stop stop-color="#7d92ad"/><stop offset="1" stop-color="#35465d"/></linearGradient>
+  <linearGradient id="db" x2="1"><stop stop-color="#25689f"/><stop offset=".5" stop-color="#58b6df"/><stop offset="1" stop-color="#225b8d"/></linearGradient>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L9 5L0 10" fill="none" stroke="#72dfc0" stroke-width="2"/></marker>
+  <filter id="shadow"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-opacity=".35"/></filter>
+ </defs>
+ <rect width="1600" height="1000" rx="30" fill="url(#bg)"/>
+ <text x="80" y="83" fill="#72dfc0" font-size="22" letter-spacing="4">CLÍNICA REMOTA</text>
+ <text x="80" y="134" fill="#f1f5f9" font-size="40" font-weight="700">Telemetry · sensor to web</text>
+ <rect x="65" y="179" width="1375" height="350" rx="30" fill="#12201f" stroke="#2d5c52" stroke-width="2"/>
+ <text x="95" y="220" fill="#92c7b9" font-size="21" letter-spacing="2">01 — LOCAL / LAN</text>
+ <rect x="505" y="584" width="935" height="350" rx="30" fill="#172032" stroke="#3a4d6d" stroke-width="2"/>
+ <text x="535" y="625" fill="#a3b9dc" font-size="21" letter-spacing="2">02 — AWS / CLOUD</text>
+ <rect x="65" y="584" width="380" height="350" rx="30" fill="#152333" stroke="#35556c" stroke-width="2"/>
+ <text x="95" y="625" fill="#94cfe4" font-size="21" letter-spacing="2">03 — WEBAPP</text>
+ <!-- Sensor modules: generic symbols, no specific measured variables asserted. -->
+ <g transform="translate(145 280)" filter="url(#shadow)">
+  <path d="M0 30L65 0L135 35L70 68Z" fill="#a1adbb"/><path d="M0 30V110L70 149V68Z" fill="#44556c"/><path d="M70 68L135 35V115L70 149Z" fill="#647891"/>
+  <circle cx="74" cy="39" r="22" fill="#172a39" stroke="#75dcc3" stroke-width="5"/><circle cx="74" cy="39" r="8" fill="#75dcc3"/>
+  <path d="M156 53L209 28L248 47L195 73Z" fill="#93a4b9"/><path d="M156 53V115L195 138V73Z" fill="#3e526c"/><path d="M195 73L248 47V114L195 138Z" fill="#617994"/>
+  <circle cx="201" cy="49" r="14" fill="#18332e" stroke="#72dfc0" stroke-width="4"/>
+ </g>
+ <text x="265" y="474" text-anchor="middle" fill="#eef7f4" font-size="29" font-weight="600">Sensors</text>
+ <text x="265" y="505" text-anchor="middle" fill="#9bb9b0" font-size="19">Multiple variables</text>
+ <!-- ESP32 stylized board -->
+ <g transform="translate(617 286)" filter="url(#shadow)">
+  <path d="M0 38L105 0L222 48L116 92Z" fill="url(#board)" stroke="#68c1a8" stroke-width="2"/><path d="M0 38V60L116 114V92Z" fill="#124a42"/><path d="M116 92L222 48V72L116 114Z" fill="#226a5d"/>
+  <path d="M65 37L111 20L163 42L118 61Z" fill="#b6bfcb"/><path d="M65 37V61L118 85V61Z" fill="#77899f"/><path d="M118 61L163 42V65L118 85Z" fill="#95a6b9"/>
+  <path d="M15 39L35 48M35 31L55 40M155 78L171 71M176 69L191 62" stroke="#eec67e" stroke-width="8"/>
+  <circle cx="184" cy="45" r="5" fill="#98f8bc"/>
+ </g>
+ <text x="730" y="474" text-anchor="middle" fill="#eef7f4" font-size="29" font-weight="600">ESP32</text>
+ <text x="730" y="505" text-anchor="middle" fill="#9bb9b0" font-size="19">Data acquisition</text>
+ <!-- Raspberry Pi board -->
+ <g transform="translate(1095 287)" filter="url(#shadow)">
+  <path d="M0 40L99 0L225 48L120 95Z" fill="url(#board)" stroke="#68c1a8" stroke-width="2"/><path d="M0 40V64L120 121V95Z" fill="#124a42"/><path d="M120 95L225 48V75L120 121Z" fill="#226a5d"/>
+  <path d="M73 44L113 27L151 43L111 61Z" fill="#243142"/><path d="M73 44V58L111 77V61Z" fill="#111b27"/>
+  <path d="M156 44L194 28L216 37L177 54Z" fill="#c2cfdb"/><path d="M156 44V73L177 84V54Z" fill="#71839a"/><path d="M177 54L216 37V64L177 84Z" fill="#8f9fb3"/>
+  <path d="M14 40L60 22" stroke="#e8c278" stroke-width="10"/>
+ </g>
+ <text x="1205" y="474" text-anchor="middle" fill="#eef7f4" font-size="29" font-weight="600">Raspberry Pi</text>
+ <text x="1205" y="505" text-anchor="middle" fill="#9bb9b0" font-size="19">Local gateway</text>
+ <!-- Acquisition and MQTT paths -->
+ <g fill="none" stroke="#72dfc0" stroke-width="4" marker-end="url(#arrow)">
+  <path d="M417 359H577"/><path d="M857 359H1055"/>
+  <path d="M1440 359H1510V745H1370"/>
+  <path d="M1080 755H960"/>
+ </g>
+ <rect x="884" y="305" width="145" height="36" rx="18" fill="#284f48"/><text x="956" y="330" text-anchor="middle" fill="#e1fff5" font-size="20">MQTT / LAN</text>
+ <rect x="1436" y="535" width="118" height="38" rx="19" fill="#284f48"/><text x="1495" y="561" text-anchor="middle" fill="#e1fff5" font-size="21">MQTT</text>
+ <!-- Generic cloud ingestion: exact AWS service deliberately unspecified. -->
+ <g transform="translate(1100 671)" filter="url(#shadow)">
+  <path d="M30 108C-8 108-10 51 29 47C27 5 87-6 108 26C143 1 190 20 191 53C236 47 254 108 213 120H35Z" fill="url(#metal)" stroke="#b3c4db" stroke-width="3"/>
+  <text x="120" y="86" text-anchor="middle" fill="#fff" font-size="39" font-weight="700">AWS</text>
+ </g>
+ <text x="1220" y="868" text-anchor="middle" fill="#eff4ff" font-size="27" font-weight="600">MQTT ingestion</text>
+ <text x="1220" y="899" text-anchor="middle" fill="#a0b3cf" font-size="19">Cloud telemetry</text>
+ <!-- Time-series database -->
+ <g transform="translate(692 677)" filter="url(#shadow)">
+  <path d="M0 30V133C0 172 204 172 204 133V30Z" fill="url(#db)"/>
+  <ellipse cx="102" cy="30" rx="102" ry="30" fill="#82cce8" stroke="#b9eafa" stroke-width="2"/>
+  <path d="M0 82C0 121 204 121 204 82M0 126C0 165 204 165 204 126" fill="none" stroke="#9fdef3" stroke-width="3" opacity=".7"/>
+ </g>
+ <text x="795" y="868" text-anchor="middle" fill="#eff4ff" font-size="29" font-weight="600">TimescaleDB</text>
+ <text x="795" y="899" text-anchor="middle" fill="#a0b3cf" font-size="19">Time-series data</text>
+ <!-- React browser: symbolic application, not a screenshot. -->
+ <g transform="translate(125 676)" filter="url(#shadow)">
+  <rect width="260" height="162" rx="13" fill="#344760"/><rect x="9" y="10" width="242" height="133" rx="7" fill="#0c1929"/>
+  <path d="M9 35H251" stroke="#38546f" stroke-width="2"/>
+  <g fill="#6f96b3"><circle cx="22" cy="23" r="4"/><circle cx="36" cy="23" r="4"/><circle cx="50" cy="23" r="4"/></g>
+  <g transform="translate(130 88)" fill="none" stroke="#72d7f4" stroke-width="3"><ellipse rx="51" ry="19"/><ellipse rx="51" ry="19" transform="rotate(60)"/><ellipse rx="51" ry="19" transform="rotate(120)"/><circle r="7" fill="#72d7f4" stroke="none"/></g>
+ </g>
+ <text x="255" y="868" text-anchor="middle" fill="#eff4ff" font-size="29" font-weight="600">React</text>
+ <text x="255" y="899" text-anchor="middle" fill="#a0b3cf" font-size="19">Telemetry webapp</text>
+ <path d="M645 755H420" fill="none" stroke="#82cfe9" stroke-width="4" stroke-dasharray="9 8" marker-end="url(#arrow)"/>
+ <text x="532" y="723" text-anchor="middle" fill="#a5d8e9" font-size="18">Data access*</text>
+ <text x="80" y="974" fill="#8293ac" font-size="18">* Logical data flow · API / backend not detailed · Illustrated architecture</text>
+</svg>

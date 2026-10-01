@@ -1,5 +1,12 @@
 # Mídias verificadas — Comando Remoto
 
+## Clínica Remota — telemetria (01/10/2026)
+
+- **Origem:** arquitetura informada diretamente por Ramon nesta conversa: sensores diversos → ESP32 → MQTT pela LAN interna → Raspberry Pi → MQTT para AWS → TimescaleDB; visualização em webapp React. A busca por manifests/README/MQTT em `C:/Repositorios/cr` encontrou apenas o projeto Comando Remoto, que não foi utilizado como evidência da telemetria. Não foi verificada a implementação de produção.
+- **Mídia:** `public/projects/clinica-remota/telemetria-arquitetura.webp`, 1600 × 1000, arquitetura ilustrada; fonte editável `docs/topologias/clinica-remota-telemetria.svg`. Inspeção visual da imagem realizada: textos e setas legíveis, sem cortes. Legendas e alt PT/EN no campo `media` do caso `clinica-remota`; ERP permanece em caso próprio.
+- **Especificação visual:** fundo escuro, sensores e placas em perspectiva isométrica, três áreas local/LAN, AWS/cloud e webapp, fluxo em verde e acesso lógico aos dados tracejado. Sem geração de imagem por prompt: desenho determinístico SVG, convertido por sharp para WebP (qualidade 90).
+- **Limites:** tipos de sensores, variáveis específicas, serviço AWS, ingestão e API/backend não foram especificados. Símbolos são conceituais; a seta tracejada até React resume o acesso lógico e não afirma conexão direta do navegador ao banco. Sem captura do sistema, acesso a dados operacionais ou acionamento de hardware.
+
 ## Origem e escopo
 
 Inspeção em 30/09/2026. Fonte: `C:/Repositorios/comando-remoto`, HEAD `835dd2507bff1955447fecac0147db16d5cd955d` (código local, sem alterar fontes). Integração em `src/data/projects.ts`, após passagem explícita do Claude.

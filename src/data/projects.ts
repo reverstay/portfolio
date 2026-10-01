@@ -73,6 +73,8 @@ type RawProject = {
   // O link de demoUrl leva a um login, não a uma demonstração aberta
   demoIsLogin?: boolean;
   videoUrl?: string;
+  videoTitle?: Text;
+  videoCaption?: Text;
   // "phone" mostra o vídeo numa moldura de celular; "wide" em tela cheia. Padrão: wide se isWeb.
   videoLayout?: "phone" | "wide";
   storeImageUrl?: string;
@@ -368,8 +370,8 @@ const raw: RawProject[] = [
       en: "Mobile robot that maps its surroundings with a 2D LiDAR and drives in autonomous or manual mode.",
     },
     longDescription: {
-      pt: "Robô no estilo Turtlebot desenvolvido na UTFPR em equipe de três pessoas (Ramon M. P. Mariano, Raphael Leite Diniz e Gustavo Orlando Bocon Huziy). Um Raspberry Pi com Ubuntu lê o LiDAR e constrói o mapa do ambiente, enquanto um ESP32 com FreeRTOS controla os motores e lê os sensores de movimento. O mapa gerado pode ser salvo ao fim da exploração.",
-      en: "Turtlebot-style robot developed at UTFPR by a team of three (Ramon M. P. Mariano, Raphael Leite Diniz and Gustavo Orlando Bocon Huziy). A Raspberry Pi running Ubuntu reads the LiDAR and builds a map of the environment, while an ESP32 running FreeRTOS drives the motors and reads the motion sensors. The resulting map can be saved at the end of the exploration.",
+      pt: "Robô no estilo Turtlebot desenvolvido na UTFPR em equipe de três pessoas (Ramon M. P. Mariano, Raphael Leite Diniz e Gustavo Orlando Bocon Huziy). Um Raspberry Pi com Ubuntu e ROS lê o LiDAR e constrói o mapa do ambiente, enquanto um ESP32 com FreeRTOS controla os motores e lê os sensores de movimento. O mapa gerado pode ser salvo ao fim da exploração.",
+      en: "Turtlebot-style robot developed at UTFPR by a team of three (Ramon M. P. Mariano, Raphael Leite Diniz and Gustavo Orlando Bocon Huziy). A Raspberry Pi running Ubuntu and ROS reads the LiDAR and builds a map of the environment, while an ESP32 running FreeRTOS drives the motors and reads the motion sensors. The resulting map can be saved at the end of the exploration.",
     },
     role: {
       pt: "Desenvolvimento do sistema embarcado e da integração entre Raspberry Pi e ESP32, programação em Python e FreeRTOS, montagem eletrônica e fabricação da estrutura com impressão 3D.",
@@ -389,6 +391,7 @@ const raw: RawProject[] = [
     },
     stack: [
       "Ubuntu",
+      "ROS",
       "Python",
       "FreeRTOS",
       "Raspberry Pi 4",
@@ -397,27 +400,42 @@ const raw: RawProject[] = [
       { pt: "Giroscópio e acelerômetro", en: "Gyroscope and accelerometer" },
       "Encoders",
       { pt: "Ponte H", en: "H-bridge" },
+      { pt: "Motores DC", en: "DC motors" },
       { pt: "Impressão 3D", en: "3D printing" },
     ],
     highlights: {
       pt: [
-        "Raspberry Pi 4 com Ubuntu processando o LiDAR e gerando o mapa.",
-        "ESP32 com FreeRTOS controlando dois motores via ponte H, com encoders e giroscópio/acelerômetro.",
+        "Raspberry Pi 4 com Ubuntu e ROS processando o LiDAR e gerando o mapa.",
+        "ESP32 com FreeRTOS controlando dois motores DC via ponte H, com encoders e giroscópio/acelerômetro.",
         "Alimentação por bateria com conversor step-down de 12 V para 5 V.",
         "Estrutura e suportes fabricados com impressão 3D.",
       ],
       en: [
-        "Raspberry Pi 4 running Ubuntu processes the LiDAR and builds the map.",
-        "ESP32 with FreeRTOS drives two motors through an H-bridge, with encoders and a gyroscope/accelerometer.",
+        "Raspberry Pi 4 running Ubuntu and ROS processes the LiDAR and builds the map.",
+        "ESP32 with FreeRTOS drives two DC motors through an H-bridge, with encoders and a gyroscope/accelerometer.",
         "Battery power with a 12 V to 5 V step-down converter.",
         "Chassis and mounts fabricated with 3D printing.",
       ],
     },
     cardHighlights: {
-      pt: ["Mapeamento com LiDAR 2D.", "ESP32 com FreeRTOS + Raspberry Pi com Ubuntu."],
-      en: ["Mapping with a 2D LiDAR.", "ESP32 with FreeRTOS + Raspberry Pi with Ubuntu."],
+      pt: ["Mapeamento com LiDAR 2D.", "ESP32 com FreeRTOS + Raspberry Pi com ROS."],
+      en: ["Mapping with a 2D LiDAR.", "ESP32 with FreeRTOS + Raspberry Pi with ROS."],
     },
     images: [],
+    media: [
+      {
+        src: "/projects/robo-autonomo-lidar/arquitetura.webp",
+        kind: "architecture",
+        alt: {
+          pt: "Mapa ilustrado do robô: LiDAR 2D ligado a um Raspberry Pi 4 com Linux e ROS, que gera o mapa e troca velocidade e odometria com um ESP32 com FreeRTOS; o ESP32 lê giroscópio, acelerômetro e encoders e aciona dois motores DC por PWM via ponte H; bateria de 12 V alimenta a ponte H e, por um conversor step-down, o Raspberry Pi em 5 V.",
+          en: "Illustrated robot map: a 2D LiDAR connected to a Raspberry Pi 4 running Linux and ROS, which builds the map and exchanges speed and odometry with an ESP32 running FreeRTOS; the ESP32 reads the gyroscope, accelerometer and encoders and drives two DC motors with PWM through an H-bridge; a 12 V battery powers the H-bridge and, through a step-down converter, the Raspberry Pi at 5 V.",
+        },
+        caption: {
+          pt: "O Raspberry Pi, com Linux e ROS, recebe a varredura do LiDAR, monta o mapa e envia comandos de velocidade ao ESP32. Com FreeRTOS, o ESP32 gera o PWM da ponte H para os dois motores DC e devolve a odometria a partir dos encoders e do giroscópio/acelerômetro. A bateria de 12 V alimenta os motores; um conversor step-down fornece 5 V ao Raspberry Pi.",
+          en: "The Raspberry Pi, running Linux and ROS, takes the LiDAR scan, builds the map and sends speed commands to the ESP32. Running FreeRTOS, the ESP32 generates the H-bridge PWM for the two DC motors and reports odometry from the encoders and the gyroscope/accelerometer. The 12 V battery powers the motors; a step-down converter supplies 5 V to the Raspberry Pi.",
+        },
+      },
+    ],
     videoUrl: "/projects/robo-autonomo.mp4",
     videoLayout: "wide",
   },
@@ -431,12 +449,12 @@ const raw: RawProject[] = [
     badge: { pt: "Em operação", en: "In operation" },
     featured: true,
     description: {
-      pt: "Monitoramento remoto de equipamentos médicos: módulos de telemetria, rede segura e plataforma de gestão.",
-      en: "Remote monitoring of medical equipment: telemetry modules, a secure network and a management platform.",
+      pt: "Monitoramento remoto de equipamentos médicos com sensores, ESP32, MQTT e webapp React.",
+      en: "Remote monitoring of medical equipment with sensors, ESP32, MQTT and a React webapp.",
     },
     longDescription: {
-      pt: "Solução para monitorar equipamentos médicos à distância. Reúne os módulos de telemetria instalados nos equipamentos, a conectividade entre eles e os recursos de monitoramento, estruturada por redes overlay, e uma plataforma de gestão para a operação.",
-      en: "A solution for monitoring medical equipment remotely. It combines the telemetry modules installed on the equipment, overlay-network connectivity between them and the monitoring resources, and a management platform for the operation.",
+      pt: "Sensores diversos coletam variáveis dos equipamentos médicos por meio de ESP32. Os dados seguem por MQTT na LAN interna até um Raspberry Pi, que os encaminha por MQTT à AWS para armazenamento em TimescaleDB. Um webapp React apresenta os dados de telemetria. Redes overlay apoiam o acesso seguro aos equipamentos; a plataforma interna de gestão é apresentada no caso ERP Clínica Remota.",
+      en: "Various sensors collect medical equipment variables through ESP32 devices. Data travels over MQTT on the internal LAN to a Raspberry Pi, which forwards it over MQTT to AWS for storage in TimescaleDB. A React webapp presents the telemetry data. Overlay networks support secure equipment access; the internal management platform is presented in the ERP Clínica Remota case.",
     },
     role: {
       pt: "Montagem, configuração e testes dos módulos; melhorias de hardware, firmware e processos; diagnóstico de falhas e suporte às equipes de campo. Gestão da infraestrutura de comunicação e segurança com redes overlay. Desenvolvimento e manutenção da plataforma de gestão, com documentos, relatórios, compras, estoque, comunicação interna e autenticação integrada ao Google, além de relatórios de qualidade de montagem, instalação e testes.",
@@ -462,6 +480,12 @@ const raw: RawProject[] = [
       { pt: "Eletrônica", en: "Electronics" },
       "Firmware",
       { pt: "Telemetria", en: "Telemetry" },
+      "ESP32",
+      "MQTT",
+      "Raspberry Pi",
+      "AWS",
+      "TimescaleDB",
+      "React",
       "Django",
       "NetBird",
       "ZeroTier",
@@ -488,8 +512,30 @@ const raw: RawProject[] = [
     },
     images: [],
     logo: "/projects/clinica-remota-logo.png",
+    media: [
+      {
+        kind: "architecture",
+        src: "/projects/clinica-remota/telemetria-arquitetura.webp",
+        alt: {
+          pt: "Topologia de telemetria: sensores, ESP32, MQTT na LAN, Raspberry Pi, MQTT para AWS, TimescaleDB e webapp React.",
+          en: "Telemetry topology: sensors, ESP32, MQTT over LAN, Raspberry Pi, MQTT to AWS, TimescaleDB and a React webapp.",
+        },
+        caption: {
+          pt: "Sensores → ESP32 → MQTT pela LAN interna → Raspberry Pi → MQTT para AWS → TimescaleDB. O webapp React apresenta a telemetria; a linha tracejada representa o acesso lógico aos dados, sem detalhar API ou backend. Arquitetura ilustrada conforme descrição de Ramon.",
+          en: "Sensors → ESP32 → MQTT over the internal LAN → Raspberry Pi → MQTT to AWS → TimescaleDB. The React webapp presents telemetry; the dashed line represents logical data access without detailing the API or backend. Illustrated architecture based on Ramon's description.",
+        },
+      },
+    ],
     videoUrl: "/projects/clinica-remota.mp4",
-    videoLayout: "phone",
+    videoTitle: {
+      pt: "Montagem de hardware nos clientes",
+      en: "Hardware assembly at customer sites",
+    },
+    videoCaption: {
+      pt: "Ramon montando o hardware da Clínica Remota nas instalações dos clientes.",
+      en: "Ramon assembling Clínica Remota hardware at customer sites.",
+    },
+    videoLayout: "wide",
     demoUrl: "https://clinicaremota.com",
   },
   {

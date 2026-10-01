@@ -341,7 +341,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
       {project.videoUrl && (
         <motion.div variants={item} className="mt-12 sm:mt-16 flex flex-col items-center w-full">
           <h2 className="mb-2 font-display text-base sm:text-lg font-medium text-text text-center">
-            {t.demo(isWeb)}
+            {project.videoTitle ?? t.demo(isWeb)}
           </h2>
           <div className="w-16 h-1 bg-zinc-600 rounded-full mb-6" />
           {wideVideo ? (
@@ -355,6 +355,9 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
                 <video src={project.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-fill pointer-events-none" />
               </div>
             </div>
+          )}
+          {project.videoCaption && (
+            <p className="mt-3 text-xs sm:text-sm leading-relaxed text-text-muted text-center">{project.videoCaption}</p>
           )}
         </motion.div>
       )}
