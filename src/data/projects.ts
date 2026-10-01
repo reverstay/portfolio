@@ -697,8 +697,8 @@ const raw: RawProject[] = [
       en: "Development of custom parts and components, including spare parts for Philips, GE and Siemens medical equipment, and prototype iteration for new hardware.",
     },
     role: {
-      pt: "Gerenciamento do setor de impressão 3D, engenharia reversa, digitalização, modelagem e fabricação de peças. Projeto de um elo para bobina abdominal de ressonância GE, com fabricação coordenada na China. Apoio à engenharia reversa de circuitos de bobinas e pré-amplificadores de ressonância.",
-      en: "Managed the 3D printing area: reverse engineering, 3D scanning, modeling and part fabrication. Designed a replacement link for a GE abdominal MRI coil and coordinated its manufacturing in China. Supported reverse engineering of MRI coil and preamplifier circuits.",
+      pt: "Gerenciamento do setor de impressão 3D. Engenharia reversa de peças: digitalização com o scanner 3D Creality Raptor, tratamento e modelagem das malhas no Blender e no Fusion 360, impressão e acabamento. Projeto de um elo para bobina abdominal de ressonância GE, com fabricação coordenada na China. Apoio à engenharia reversa de circuitos de bobinas e pré-amplificadores de ressonância.",
+      en: "Managed the 3D printing area. Reverse engineered parts: scanning with the Creality Raptor 3D scanner, mesh cleanup and modeling in Blender and Fusion 360, printing and finishing. Designed a replacement link for a GE abdominal MRI coil and coordinated its manufacturing in China. Supported reverse engineering of MRI coil and preamplifier circuits.",
     },
     results: {
       pt: ["Mais de 40 peças desenvolvidas para mais de 15 modelos de equipamentos.", "Elo projetado e em uso em uma bobina abdominal de ressonância GE."],
@@ -709,24 +709,41 @@ const raw: RawProject[] = [
       "Blender",
       "OrcaSlicer",
       "Creality K1 Max",
-      "Creality Raptor",
+      { pt: "Scanner 3D Creality Raptor", en: "Creality Raptor 3D scanner" },
+      { pt: "Engenharia reversa", en: "Reverse engineering" },
       "Bambu Lab",
       "PLA · ABS · TPU · PETG",
       "Nylon · PET-CF",
     ],
     highlights: {
       pt: [
-        "Engenharia reversa com escaneamento 3D.",
-        "Modelagem paramétrica e iteração de protótipos.",
+        "Engenharia reversa de peças a partir do escaneamento 3D com o Creality Raptor.",
+        "Tratamento de malhas e modelagem no Blender; modelagem paramétrica no Fusion 360.",
+        "Iteração de protótipos, com acabamento manual das peças impressas.",
         "Fabricação em PLA, ABS, TPU, nylon, PETG e PET-CF.",
       ],
-      en: ["Reverse engineering with 3D scanning.", "Parametric modeling and prototype iteration.", "Fabrication in PLA, ABS, TPU, nylon, PETG and PET-CF."],
+      en: [
+        "Reverse engineering of parts from 3D scans made with the Creality Raptor.",
+        "Mesh cleanup and modeling in Blender; parametric modeling in Fusion 360.",
+        "Prototype iteration, with hand finishing of printed parts.",
+        "Fabrication in PLA, ABS, TPU, nylon, PETG and PET-CF.",
+      ],
     },
     cardHighlights: {
-      pt: ["Mais de 40 peças para mais de 15 modelos.", "Engenharia reversa com escaneamento 3D."],
-      en: ["40+ parts for 15+ equipment models.", "Reverse engineering with 3D scanning."],
+      pt: ["Mais de 40 peças para mais de 15 modelos.", "Engenharia reversa com scanner 3D e Blender."],
+      en: ["40+ parts for 15+ equipment models.", "Reverse engineering with a 3D scanner and Blender."],
     },
     images: [],
+    videoUrl: "/projects/manufatura-aditiva.mp4",
+    videoTitle: {
+      pt: "Engenharia reversa: do escaneamento à peça pronta",
+      en: "Reverse engineering: from scan to finished part",
+    },
+    videoCaption: {
+      pt: "Digitalização da peça com o scanner Creality Raptor, ajuste da malha no computador, impressão, acabamento com micro-retífica e a peça final.",
+      en: "Scanning the part with the Creality Raptor, adjusting the mesh on the computer, printing, finishing with a rotary tool and the final part.",
+    },
+    videoLayout: "wide",
   },
   {
     slug: "uaxica",

@@ -160,6 +160,54 @@ function MediaFigure({ media, wide, onOpen }: { media: ProjectMedia; wide: boole
   );
 }
 
+// Vídeo limitado à altura da tela (retrato ou paisagem), com botão de tela cheia.
+// Em tela cheia aparecem os controles nativos; no iPhone usa o player do sistema.
+function FitVideo({ src }: { src: string }) {
+  const { t } = useI18n();
+  const ref = useRef<HTMLVideoElement>(null);
+  const [fullscreen, setFullscreen] = useState(false);
+
+  useEffect(() => {
+    const onChange = () => setFullscreen(document.fullscreenElement === ref.current);
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  const openFullscreen = () => {
+    const video = ref.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
+    if (!video) return;
+    if (video.requestFullscreen) video.requestFullscreen().catch(() => video.webkitEnterFullscreen?.());
+    else video.webkitEnterFullscreen?.();
+  };
+
+  return (
+    <div className="relative mx-auto w-fit max-w-full overflow-hidden rounded-2xl border border-border/80 bg-black shadow-2xl">
+      <video
+        ref={ref}
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        controls={fullscreen}
+        onClick={fullscreen ? undefined : openFullscreen}
+        className="block h-auto w-auto max-w-full max-h-[75svh] object-contain cursor-zoom-in"
+      />
+      <button
+        type="button"
+        onClick={openFullscreen}
+        aria-label={t.projects.fullscreen}
+        title={t.projects.fullscreen}
+        className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-accent"
+      >
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 function MediaGallery({ media, onOpen }: { media: ProjectMedia[]; onOpen: (m: ProjectMedia, heading: string) => void }) {
   const { t: dict } = useI18n();
   const t = dict.projects;
@@ -345,9 +393,7 @@ export function ProjectDetail({ project, fromHome }: { project: Project; fromHom
           </h2>
           <div className="w-16 h-1 bg-zinc-600 rounded-full mb-6" />
           {wideVideo ? (
-            <div className="relative w-full overflow-hidden rounded-2xl border border-border/80 bg-black shadow-2xl">
-              <video src={project.videoUrl} autoPlay loop muted playsInline className="w-full h-auto object-cover" />
-            </div>
+            <FitVideo src={project.videoUrl} />
           ) : (
             // Moldura de celular
             <div className="relative w-full max-w-70 sm:max-w-[320px] aspect-9/19 overflow-hidden rounded-[42px] border-10 border-zinc-800 bg-black shadow-2xl">

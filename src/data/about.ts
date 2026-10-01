@@ -85,6 +85,8 @@ const raw = {
         "Firmware",
         { pt: "Eletrônica", en: "Electronics" },
         "Fusion 360",
+        "Blender",
+        { pt: "Scanner 3D Creality Raptor", en: "Creality Raptor 3D scanner" },
         { pt: "Impressão 3D", en: "3D printing" },
       ],
       description: {
