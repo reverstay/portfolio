@@ -118,8 +118,8 @@ CMD ["gunicorn", "core.wsgi", "-b", "0.0.0.0:8000"]`,
     title: { pt: "Entrega contínua", en: "Continuous delivery" },
     language: "yaml",
     description: {
-      pt: "Testes a cada push e deploy automatizado, como nos pipelines do ERP Núcleo Dev e das aplicações internas em Ubuntu Server.",
-      en: "Tests on every push and automated deploys, as in the ERP Núcleo Dev pipelines and the internal apps on Ubuntu Server.",
+      pt: "Testes a cada push e deploy automatizado, como nos pipelines das aplicações internas em Ubuntu Server.",
+      en: "Tests on every push and automated deploys, as in the pipelines of the internal apps on Ubuntu Server.",
     },
     fileName: "deploy.yml",
     code: `name: deploy
